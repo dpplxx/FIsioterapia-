@@ -412,8 +412,12 @@
         } else {
           taken.add(id);
         }
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(taken)));
         applyState(button);
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(taken)));
+        } catch (e) {
+          /* modo privado ou armazenamento bloqueado: o clique ainda funciona, só não fica salvo pra próxima visita */
+        }
       });
     });
   })();
