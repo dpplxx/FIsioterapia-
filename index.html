@@ -12,6 +12,12 @@
     --gold: #B4832E;
     --muted: #5B665F;
     --hairline: rgba(30, 51, 48, 0.16);
+    --free-bg: #E7EFE2;
+    --free-border: #A9C79C;
+    --free-text: #3C6B34;
+    --taken-bg: #F5E3E0;
+    --taken-border: #D7A79C;
+    --taken-text: #A23B2D;
   }
 
   * { box-sizing: border-box; }
@@ -205,25 +211,51 @@
   .slot {
     font-variant-numeric: tabular-nums;
     font-size: 13px;
-    color: var(--ink);
-    background: var(--card);
-    border: 1px solid var(--hairline);
+    font-weight: 600;
+    color: var(--free-text);
+    background: var(--free-bg);
+    border: 1px solid var(--free-border);
     padding: 6px 12px;
     letter-spacing: 0.01em;
   }
 
   .slot.taken {
-    color: var(--muted);
-    background: transparent;
-    border-style: dashed;
+    color: var(--taken-text);
+    background: var(--taken-bg);
+    border-color: var(--taken-border);
     text-decoration: line-through;
-    text-decoration-color: var(--muted);
+    text-decoration-color: var(--taken-text);
+    font-weight: 400;
   }
+
+  .legend {
+    display: flex;
+    gap: 18px;
+    margin: 16px 0 0;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .legend-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .legend-dot.free { background: var(--free-text); }
+  .legend-dot.taken { background: var(--taken-text); }
 
   .schedule-note {
     font-size: 12.5px;
     color: var(--muted);
-    margin: 16px 0 0;
+    margin: 12px 0 0;
   }
 
   .closing {
@@ -293,6 +325,10 @@
 
   <p class="plans-label">Horários disponíveis</p>
   <div class="schedule">
+    <div class="legend">
+      <span class="legend-item"><span class="legend-dot free"></span>Disponível</span>
+      <span class="legend-item"><span class="legend-dot taken"></span>Ocupado</span>
+    </div>
     <div class="schedule-group">
       <p class="schedule-days">Segunda, quarta e sexta</p>
       <div class="slots">
@@ -321,7 +357,7 @@
         <span class="slot">17:00</span>
       </div>
     </div>
-    <p class="schedule-note">Sessões de 50 minutos, com 10 minutos de intervalo entre atendimentos — cada horário indica o início da sessão. Horários riscados já estão ocupados.</p>
+    <p class="schedule-note">Sessões de 50 minutos, com 10 minutos de intervalo entre atendimentos — cada horário indica o início da sessão.</p>
   </div>
 
   <p class="closing">Qualquer dúvida sobre os planos, horários ou a frequência mais indicada para o seu caso, estou à inteira disposição para esclarecer.</p>
