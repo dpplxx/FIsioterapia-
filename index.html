@@ -209,6 +209,7 @@
   }
 
   .slot {
+    font: inherit;
     font-variant-numeric: tabular-nums;
     font-size: 13px;
     font-weight: 600;
@@ -217,6 +218,23 @@
     border: 1px solid var(--free-border);
     padding: 6px 12px;
     letter-spacing: 0.01em;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slot { transition: none; }
+  }
+
+  .slot:hover {
+    filter: brightness(0.97);
+  }
+
+  .slot:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
   }
 
   .slot.taken {
@@ -231,7 +249,9 @@
   .legend {
     display: flex;
     gap: 18px;
-    margin: 16px 0 0;
+    margin: 20px 0 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--hairline);
   }
 
   .legend-item {
@@ -325,42 +345,78 @@
 
   <p class="plans-label">Horários disponíveis</p>
   <div class="schedule">
-    <div class="legend">
-      <span class="legend-item"><span class="legend-dot free"></span>Disponível</span>
-      <span class="legend-item"><span class="legend-dot taken"></span>Ocupado</span>
-    </div>
     <div class="schedule-group">
       <p class="schedule-days">Segunda, quarta e sexta</p>
       <div class="slots">
-        <span class="slot">9:00</span>
-        <span class="slot">10:00</span>
-        <span class="slot">11:00</span>
-        <span class="slot">12:00</span>
-        <span class="slot">13:00</span>
-        <span class="slot">14:00</span>
-        <span class="slot">15:00</span>
-        <span class="slot">16:00</span>
-        <span class="slot">17:00</span>
+        <button type="button" class="slot" data-slot="smf-9">9:00</button>
+        <button type="button" class="slot" data-slot="smf-10">10:00</button>
+        <button type="button" class="slot" data-slot="smf-11">11:00</button>
+        <button type="button" class="slot" data-slot="smf-12">12:00</button>
+        <button type="button" class="slot" data-slot="smf-13">13:00</button>
+        <button type="button" class="slot" data-slot="smf-14">14:00</button>
+        <button type="button" class="slot" data-slot="smf-15">15:00</button>
+        <button type="button" class="slot" data-slot="smf-16">16:00</button>
+        <button type="button" class="slot" data-slot="smf-17">17:00</button>
       </div>
     </div>
     <div class="schedule-group">
       <p class="schedule-days">Terça e quinta</p>
       <div class="slots">
-        <span class="slot">9:00</span>
-        <span class="slot">10:00</span>
-        <span class="slot">11:00</span>
-        <span class="slot">12:00</span>
-        <span class="slot">13:00</span>
-        <span class="slot">14:00</span>
-        <span class="slot">15:00</span>
-        <span class="slot">16:00</span>
-        <span class="slot">17:00</span>
+        <button type="button" class="slot" data-slot="tt-9">9:00</button>
+        <button type="button" class="slot" data-slot="tt-10">10:00</button>
+        <button type="button" class="slot" data-slot="tt-11">11:00</button>
+        <button type="button" class="slot" data-slot="tt-12">12:00</button>
+        <button type="button" class="slot" data-slot="tt-13">13:00</button>
+        <button type="button" class="slot" data-slot="tt-14">14:00</button>
+        <button type="button" class="slot" data-slot="tt-15">15:00</button>
+        <button type="button" class="slot" data-slot="tt-16">16:00</button>
+        <button type="button" class="slot" data-slot="tt-17">17:00</button>
       </div>
     </div>
-    <p class="schedule-note">Sessões de 50 minutos, com 10 minutos de intervalo entre atendimentos — cada horário indica o início da sessão.</p>
+    <div class="legend">
+      <span class="legend-item"><span class="legend-dot free"></span>Disponível</span>
+      <span class="legend-item"><span class="legend-dot taken"></span>Ocupado</span>
+    </div>
+    <p class="schedule-note">Sessões de 50 minutos, com 10 minutos de intervalo entre atendimentos — cada horário indica o início da sessão. Clique num horário pra marcar como ocupado ou disponível.</p>
   </div>
 
   <p class="closing">Qualquer dúvida sobre os planos, horários ou a frequência mais indicada para o seu caso, estou à inteira disposição para esclarecer.</p>
 </div>
+<script>
+  (function () {
+    var STORAGE_KEY = "fisio-horarios-ocupados";
+    var buttons = document.querySelectorAll(".slot");
+    var taken;
+    try {
+      taken = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY)) || []);
+    } catch (e) {
+      taken = new Set();
+    }
+
+    function applyState(button) {
+      var isTaken = taken.has(button.dataset.slot);
+      button.classList.toggle("taken", isTaken);
+      button.setAttribute("aria-pressed", isTaken ? "true" : "false");
+      button.setAttribute(
+        "aria-label",
+        button.textContent + (isTaken ? " — ocupado, clique para liberar" : " — disponível, clique para marcar como ocupado")
+      );
+    }
+
+    buttons.forEach(function (button) {
+      applyState(button);
+      button.addEventListener("click", function () {
+        var id = button.dataset.slot;
+        if (taken.has(id)) {
+          taken.delete(id);
+        } else {
+          taken.add(id);
+        }
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(taken)));
+        applyState(button);
+      });
+    });
+  })();
+</script>
 </body>
 </html>
