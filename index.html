@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fisioterapia Domiciliar — Valores e Atendimento</title>
+<style>
+  :root {
+    --ink: #1E3330;
+    --paper: #EDEEE6;
+    --card: #F8F8F3;
+    --gold: #B4832E;
+    --muted: #5B665F;
+    --hairline: rgba(30, 51, 48, 0.16);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    padding: 40px 16px;
+    background: #d9dad0;
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 560px;
+    background: var(--paper);
+    color: var(--ink);
+    position: relative;
+    padding: 56px 44px 40px;
+    box-shadow: 0 18px 50px -12px rgba(20, 34, 32, 0.35);
+    background-image:
+      radial-gradient(circle at 18% 12%, rgba(255,255,255,0.5) 0%, transparent 45%),
+      radial-gradient(circle at 82% 88%, rgba(30,51,48,0.04) 0%, transparent 50%);
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin: 0 0 18px;
+  }
+
+  h1 {
+    font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    font-weight: 400;
+    font-size: 34px;
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    margin: 0 0 14px;
+    max-width: 11.5ch;
+  }
+
+  .lede {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--muted);
+    max-width: 42ch;
+    margin: 0 0 34px;
+  }
+
+  .lede strong { color: var(--ink); font-weight: 600; }
+
+  .rule {
+    height: 1px;
+    background: var(--hairline);
+    margin: 0 0 30px;
+  }
+
+  .plans-label {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    margin: 0 0 14px;
+  }
+
+  .plans {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--hairline);
+    background: var(--card);
+    margin-bottom: 28px;
+  }
+
+  .plan {
+    padding: 24px 22px;
+    position: relative;
+  }
+
+  .plan + .plan {
+    border-left: 1px solid var(--hairline);
+  }
+
+  .plan-freq {
+    font-family: Georgia, "Iowan Old Style", serif;
+    font-size: 19px;
+    margin: 0 0 4px;
+  }
+
+  .plan-sessions {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0 0 18px;
+  }
+
+  .plan-price {
+    font-variant-numeric: tabular-nums;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 0 0 3px;
+    letter-spacing: -0.01em;
+  }
+
+  .plan-price sup {
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 2px;
+    vertical-align: 0.55em;
+  }
+
+  .plan-unit {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .plan-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    margin: 12px 0 0;
+    padding-top: 12px;
+    border-top: 1px dashed var(--hairline);
+  }
+
+  .plan-note strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .conditions {
+    margin: 0 0 30px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cond-item {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 18px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .cond-item:first-child { padding-top: 0; }
+  .cond-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .cond-item dt {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin: 0;
+    padding-top: 2px;
+  }
+
+  .cond-item dd {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  .schedule {
+    margin: 0 0 30px;
+  }
+
+  .schedule-group + .schedule-group {
+    margin-top: 18px;
+  }
+
+  .schedule-days {
+    font-family: Georgia, "Iowan Old Style", serif;
+    font-size: 15.5px;
+    color: var(--ink);
+    margin: 0 0 10px;
+  }
+
+  .slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .slot {
+    font-variant-numeric: tabular-nums;
+    font-size: 13px;
+    color: var(--ink);
+    background: var(--card);
+    border: 1px solid var(--hairline);
+    padding: 6px 12px;
+    letter-spacing: 0.01em;
+  }
+
+  .slot.taken {
+    color: var(--muted);
+    background: transparent;
+    border-style: dashed;
+    text-decoration: line-through;
+    text-decoration-color: var(--muted);
+  }
+
+  .schedule-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    margin: 16px 0 0;
+  }
+
+  .closing {
+    border-top: 1px solid var(--hairline);
+    padding-top: 22px;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--muted);
+    font-style: italic;
+    font-family: Georgia, serif;
+  }
+
+  @media (max-width: 420px) {
+    .card { padding: 44px 26px 32px; }
+    h1 { font-size: 28px; }
+    .plans { grid-template-columns: 1fr; }
+    .plan + .plan { border-left: none; border-top: 1px solid var(--hairline); }
+    .cond-item { grid-template-columns: 1fr; gap: 4px; }
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <p class="eyebrow">Atendimento Domiciliar</p>
+  <h1>Cuidado fisioterapêutico no conforto da sua casa</h1>
+  <p class="lede">Sessões individuais de <strong>50 minutos</strong>, realizadas na sua residência, com planos conforme a frequência recomendada para o seu tratamento.</p>
+
+  <div class="rule"></div>
+
+  <p class="plans-label">Planos</p>
+  <div class="plans">
+    <div class="plan">
+      <p class="plan-freq">2× por semana</p>
+      <p class="plan-sessions">8 sessões no mês</p>
+      <p class="plan-price"><sup>R$</sup>1.000</p>
+      <p class="plan-unit">valor do pacote</p>
+      <p class="plan-note">Pago <strong>integralmente na 1ª sessão</strong></p>
+    </div>
+    <div class="plan">
+      <p class="plan-freq">3× por semana</p>
+      <p class="plan-sessions">12 sessões no mês</p>
+      <p class="plan-price"><sup>R$</sup>1.500</p>
+      <p class="plan-unit">valor do pacote</p>
+      <p class="plan-note">Pago <strong>integralmente na 1ª sessão</strong></p>
+    </div>
+  </div>
+
+  <p class="plans-label">Condições de atendimento</p>
+  <dl class="conditions">
+    <div class="cond-item">
+      <dt>Modalidade</dt>
+      <dd>Atendimento oferecido somente na forma de pacote — isso garante a fixação do seu horário na agenda.</dd>
+    </div>
+    <div class="cond-item">
+      <dt>Pacote</dt>
+      <dd>Pagamento integral, à vista, na primeira sessão.</dd>
+    </div>
+    <div class="cond-item">
+      <dt>Avulsa</dt>
+      <dd>R$ 150 por sessão, mediante disponibilidade. Cobrança semanal — não a cada sessão.</dd>
+    </div>
+    <div class="cond-item">
+      <dt>Forma</dt>
+      <dd>Pix ou dinheiro.</dd>
+    </div>
+  </dl>
+
+  <p class="plans-label">Horários disponíveis</p>
+  <div class="schedule">
+    <div class="schedule-group">
+      <p class="schedule-days">Segunda, quarta e sexta</p>
+      <div class="slots">
+        <span class="slot">9:00</span>
+        <span class="slot">10:00</span>
+        <span class="slot">11:00</span>
+        <span class="slot">12:00</span>
+        <span class="slot">13:00</span>
+        <span class="slot">14:00</span>
+        <span class="slot">15:00</span>
+        <span class="slot">16:00</span>
+        <span class="slot">17:00</span>
+      </div>
+    </div>
+    <div class="schedule-group">
+      <p class="schedule-days">Terça e quinta</p>
+      <div class="slots">
+        <span class="slot">9:00</span>
+        <span class="slot">10:00</span>
+        <span class="slot">11:00</span>
+        <span class="slot">12:00</span>
+        <span class="slot">13:00</span>
+        <span class="slot">14:00</span>
+        <span class="slot">15:00</span>
+        <span class="slot">16:00</span>
+        <span class="slot">17:00</span>
+      </div>
+    </div>
+    <p class="schedule-note">Sessões de 50 minutos, com 10 minutos de intervalo entre atendimentos — cada horário indica o início da sessão. Horários riscados já estão ocupados.</p>
+  </div>
+
+  <p class="closing">Qualquer dúvida sobre os planos, horários ou a frequência mais indicada para o seu caso, estou à inteira disposição para esclarecer.</p>
+</div>
+</body>
+</html>
